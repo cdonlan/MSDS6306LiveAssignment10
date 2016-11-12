@@ -1,17 +1,18 @@
 {
     "collab_server" : "",
-    "contents" : "#Add libraries\nlibrary(\"ggplot2\")\nlibrary(\"doBy\")\n\n#Read in data\nnyt <- read.table(\"nyt1.csv\",header=TRUE, \",\")\nclass(data)\n\n#Catagorize by age\nbins <- c(-Inf,0,18,24,34,44,54,64,Inf)\nnyt$AgeGroup = cut(nyt$Age,bins)\n\n#Confirm changes\nsummary(nyt)\nhead(nyt)\nstr(nyt)\n\n#Subset data where Impressions > 0\nImpSub = subset(nyt, Impressions > 0)\n\n#Confirm subset changes\nsummary(ImpSub)\nhead(ImpSub, 100)\nstr(ImpSub)\n\n#Create click through rate variable\nImpSub$CTR = ImpSub$Clicks/ImpSub$Impressions\nhead(ImpSub, 100)\n\n#plot distribution of impressions vs CTR\nggplot(data=ImpSub, aes(x=Impressions, fill=AgeGroup)) +\n  geom_histogram(binwidth = 1)\n\n#plot distribution of impressions vs CTR\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_histogram(binwidth = .05)\n\nctrbins <- c(-Inf,0.2,0.4,0.6,0.8,Inf)\nImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins)\n\n\nhead(ImpSub)\n\n#Get mean of age\nmean(ImpSub$Age)\n\n#Get mean of Impressions\nmean(ImpSub$Impressions)\n\n#Get mean of CTR\nmean(ImpSub$CTR)\n\n#Percentage of Males and Femals\ncbind( Freq=table(ImpSub$Gender), relative=100*prop.table(table(ImpSub$Gender)))\n\n#Percentage of Signed in\ncbind( Freq=table(ImpSub$Signed_In), relative=100*prop.table(table(ImpSub$Signed_In)))\n\n#Get means of Impressions by Age group\nsummaryBy(Impressions~AgeGroup,data=ImpSub,FUN=c(mean))\n\n#Get means of CTR by Age group\nsummaryBy(CTR~AgeGroup,data=ImpSub,FUN=c(mean))\n\n#Get means of Gender by Age group\nsummaryBy(Gender~,data=ImpSub,FUN=c(mean))\n\n#Get means of Signed_In by Age group\nsummaryBy(Signed_In~AgeGroup,data=ImpSub,FUN=c(mean))\n\nCTRAgeGroup <- table(ImpSub$CTRGroup,ImpSub$AgeGroup)\n\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_histogram(binwidth = .025)\n\n\nsummary(subset(ImpSub,CTR>0))\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_density()\n\n\n\n\n",
+    "contents" : "#Add libraries\nlibrary(\"ggplot2\")\nlibrary(\"doBy\")\n\n#Read in data\nnyt <- read.table(\"nyt1.csv\",header=TRUE, \",\")\nclass(data)\n\n#Catagorize by age\nbins <- c(-Inf,0,18,24,34,44,54,64,Inf)\nnyt$AgeGroup = cut(nyt$Age,bins)\n\n#Confirm changes\nsummary(nyt)\nhead(nyt)\nstr(nyt)\n\n#Subset data where Impressions > 0\nImpSub = subset(nyt, Impressions > 0)\n\n#Confirm subset changes\nsummary(ImpSub)\nhead(ImpSub, 100)\nstr(ImpSub)\n\n#Create click through rate variable\nImpSub$CTR = ImpSub$Clicks/ImpSub$Impressions\nhead(ImpSub, 100)\n\n#plot distribution of impressions \nggplot(data=ImpSub, aes(x=Impressions, fill=AgeGroup)) +\n  geom_histogram(binwidth = 1)\n\n#plot distribution of CTR\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_histogram(binwidth = .05)\n\nctrbins <- c(-Inf,0.2,0.4,0.6,0.8,Inf)\nImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins)\n\n\n\n#Get mean of age\nmean(ImpSub$Age)\n\n#Get mean of Impressions\nmean(ImpSub$Impressions)\n\n#Get mean of CTR\nmean(ImpSub$CTR)\n\n#Percentage of Males and Femals\ncbind( Freq=table(ImpSub$Gender), relative=100*prop.table(table(ImpSub$Gender)))\n\n#Percentage of Signed in\ncbind( Freq=table(ImpSub$Signed_In), relative=100*prop.table(table(ImpSub$Signed_In)))\n\n#Get means of Impressions by Age group\nsummaryBy(Impressions~AgeGroup,data=ImpSub,FUN=c(mean))\n\n#Get means of CTR by Age group\nsummaryBy(CTR~AgeGroup,data=ImpSub,FUN=c(mean))\n\n#Get means of Gender by Age group\nsummaryBy(Gender~,data=ImpSub,FUN=c(mean))\n\n#Get means of Signed_In by Age group\nsummaryBy(Signed_In~AgeGroup,data=ImpSub,FUN=c(mean))\n\nCTRAgeGroup <- table(ImpSub$CTRGroup,ImpSub$AgeGroup)\n\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_histogram(binwidth = .025)\n\nggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +\n  geom_density()\n\n\n\n\n",
     "created" : 1478576298861.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2977593252",
+    "hash" : "1912014091",
     "id" : "8427E695",
-    "lastKnownWriteTime" : 1478921130,
-    "last_content_update" : 1478921130221,
+    "lastKnownWriteTime" : 1478922888,
+    "last_content_update" : 1478922888365,
     "path" : "~/School/IntroDS/Unit 10/Live Assignment 10/LiveAssignment10.r",
     "project_path" : "LiveAssignment10.r",
     "properties" : {
+        "source_window_id" : "w2cplkhpuv1j2",
         "tempName" : "Untitled1"
     },
     "relative_order" : 1,

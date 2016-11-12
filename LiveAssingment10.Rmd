@@ -1,0 +1,124 @@
+---
+title: "Live Assignment 10"
+author: "Chris Donlan"
+date: "November 11, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+This is an analysis for New York Times home page ad click through rates. The data represents one simulated days’ worth of ads during May 2012. Each row represents a user. 
+
+The raw data contains the following fields:
+- Age
+- Gender (0 = female and 1 = male)
+- Number of Impressions
+- Number of Clicks
+- Whether user was logged in
+
+Data was downloaded from:
+http://stat.columbia.edu/~rachel/datasets/nyt1.csv.
+
+The following libraries were used.
+```{r}
+library("ggplot2")
+library("doBy")
+```
+
+Load the CSV file into a dataframe.
+```{r}
+#Read in data
+nyt <- read.table("nyt1.csv",header=TRUE, ",")
+class(data)
+```
+
+Use the cut function to categorize the users into various age categories.
+```{r}
+#Catagorize by age
+bins <- c(-Inf,0,18,24,34,44,54,64,Inf)
+nyt$AgeGroup = cut(nyt$Age,bins)
+```
+
+Remove observations were no ad impressions were made.
+```{r}
+#Subset data where Impressions > 0
+ImpSub = subset(nyt, Impressions > 0)
+```
+
+Create new variable, click through rate(CTR), which is simply clicks divided by number of impressions.
+```{r}
+#Create click through rate variable
+ImpSub$CTR = ImpSub$Clicks/ImpSub$Impressions
+head(ImpSub, 100)
+```
+
+Plot histogram of impression's distribution.
+```{r}
+#plot distribution of CTR
+ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) + geom_histogram(binwidth = .05)
+```
+
+Plot histogram of CTR's distribution.
+```{r}
+#plot distribution of CTR
+ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +geom_histogram(binwidth = .05)
+```
+
+Create new CTR group variable.
+```{r}
+ctrbins <- c(-Inf,0.2,0.4,0.6,0.8,Inf)
+ImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins)
+```
+
+Output summary stats.
+```{r}
+#Get mean of age
+mean(ImpSub$Age)
+
+#Get mean of Impressions
+mean(ImpSub$Impressions)
+
+#Get mean of CTR
+mean(ImpSub$CTR)
+
+#Percentage of Males and Femals
+cbind( Freq=table(ImpSub$Gender), relative=100*prop.table(table(ImpSub$Gender)))
+
+#Percentage of Signed in
+cbind( Freq=table(ImpSub$Signed_In), relative=100*prop.table(table(ImpSub$Signed_In)))
+```
+
+Output summary by AgeGroup variable.
+```{r}
+#Get means of Impressions by Age group
+summaryBy(Impressions~AgeGroup,data=ImpSub,FUN=c(mean))
+
+#Get means of CTR by Age group
+summaryBy(CTR~AgeGroup,data=ImpSub,FUN=c(mean))
+
+#Get means of Gender by Age group
+summaryBy(Gender~AgeGroup,data=ImpSub,FUN=c(mean))
+
+#Get means of Signed_In by Age group
+summaryBy(Signed_In~AgeGroup,data=ImpSub,FUN=c(mean))
+```
+
+Create new table based on CTRGroup and AgeGroup vectors.
+```{r}
+CTRAgeGroup <- table(ImpSub$CTRGroup,ImpSub$AgeGroup)
+```
+
+Plot histogram of CTR's distribution.
+```{r}
+ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
+  geom_histogram(binwidth = .025)
+```
+
+Plot interesting density plot of CTR and AgeGroup.
+```{r}
+ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
+  geom_density()
+```

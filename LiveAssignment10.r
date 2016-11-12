@@ -27,11 +27,11 @@ str(ImpSub)
 ImpSub$CTR = ImpSub$Clicks/ImpSub$Impressions
 head(ImpSub, 100)
 
-#plot distribution of impressions vs CTR
+#plot distribution of impressions 
 ggplot(data=ImpSub, aes(x=Impressions, fill=AgeGroup)) +
   geom_histogram(binwidth = 1)
 
-#plot distribution of impressions vs CTR
+#plot distribution of CTR
 ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
   geom_histogram(binwidth = .05)
 
@@ -39,7 +39,6 @@ ctrbins <- c(-Inf,0.2,0.4,0.6,0.8,Inf)
 ImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins)
 
 
-head(ImpSub)
 
 #Get mean of age
 mean(ImpSub$Age)
@@ -73,8 +72,6 @@ CTRAgeGroup <- table(ImpSub$CTRGroup,ImpSub$AgeGroup)
 ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
   geom_histogram(binwidth = .025)
 
-
-summary(subset(ImpSub,CTR>0))
 ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
   geom_density()
 
