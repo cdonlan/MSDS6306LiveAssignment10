@@ -5,9 +5,9 @@ This is an analysis for New York Times home page ad click through rates.
 The data represents one simulated days’ worth of ads during May 2012.
 Each row represents a user.
 
-The raw data contains the following fields: -Age -Gender (0 = female and
-1 = male) -Number of Impressions -Number of Clicks- Whether user was
-logged in
+The raw data contains the following fields: - Age - Gender (0 = female
+and 1 = male) - Number of Impressions - Number of Clicks- Whether user
+was logged in
 
 Data was downloaded from:
 <http://stat.columbia.edu/~rachel/datasets/nyt1.csv>.
