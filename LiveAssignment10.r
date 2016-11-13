@@ -7,8 +7,9 @@ nyt <- read.table("nyt1.csv",header=TRUE, ",")
 class(data)
 
 #Catagorize by age
-bins <- c(-Inf,0,18,24,34,44,54,64,Inf)
+bins <- c(-Inf,18,24,34,44,54,64,Inf)
 nyt$AgeGroup = cut(nyt$Age,bins)
+levels(nyt$AgeGroup) <- c("<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+")
 
 #Confirm changes
 summary(nyt)
@@ -36,7 +37,8 @@ ggplot(subset(ImpSub,CTR>0), aes(x=CTR, fill=AgeGroup)) +
   geom_histogram(binwidth = .05)
 
 ctrbins <- c(-Inf,0.2,0.4,0.6,0.8,Inf)
-ImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins)
+ImpSub$CTRGroup = cut(ImpSub$CTR,ctrbins,right=FALSE)
+levels(ImpSub$CTRGroup) <- c("CTR< 0.2", "0.2<=CTR<0.4", "0.4<=CTR<0.6", "0.6<=CTR<0.8", "CTR>0.8")
 
 
 
