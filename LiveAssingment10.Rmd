@@ -2,7 +2,7 @@
 title: "Live Assignment 10"
 author: "Chris Donlan"
 date: "November 11, 2016"
-output: md_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
